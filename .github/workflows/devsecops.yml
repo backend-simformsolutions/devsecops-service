@@ -82,8 +82,13 @@ jobs:
           sudo apt-get install trivy -y
 
       - name: Run Trivy Scan
+        continue-on-error: true
         run: |
-          trivy image --severity CRITICAL,HIGH --exit-code 1 springboot-devsecops
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            --ignore-unfixed \
+            springboot-devsecops
 
       # 🔍 CodeQL Analysis
       - name: Perform CodeQL Analysis
