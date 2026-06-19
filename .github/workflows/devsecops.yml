@@ -48,14 +48,13 @@ jobs:
 
       # 🔍 SonarQube Scan (SAST)
       - name: Sonar Scan
-        continue-on-error: true
         run: |
-          mvn sonar:sonar \
-            -Dsonar.projectKey=springboot-devsecops \
+          echo "Organization: ${{ secrets.SONAR_ORG }}"
+          mvn -X verify sonar:sonar \
+            -Dsonar.projectKey=devsecops-springboot-poc \
             -Dsonar.organization=${{ secrets.SONAR_ORG }} \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.qualitygate.wait=true
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       # 🔍 Dependency Scan (Snyk CLI)
       - name: Install Snyk
